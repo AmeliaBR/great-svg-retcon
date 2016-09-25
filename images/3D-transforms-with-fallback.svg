@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:lang="en"
+     viewBox="-50 -50 300 100" width="1500" height="500" >
+  <title>Team Web: 3D transform example with 2D fallback</title>
+  <style>
+    svg:root {
+      background: lightSkyBlue;
+      width: 100%;
+      max-height: 100vh;
+      font: 24px "Bauhaus 93", "Impact", "Arial Black", sans-serif;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    svg, symbol {
+      overflow: visible;
+    }
+    use > svg { /* fixes for Firefox */
+      font: inherit;
+      fill: inherit;
+      stroke: inherit;
+    }
+    [role="heading"] {
+      fill: fireBrick;
+    }
+    [role="heading"][aria-level="1"]{
+      font-size: 36px;
+      stroke: tomato;
+    }
+    .shield {  
+        font: bold 20px Trebuchet, Tahoma, sans-serif;
+        text-anchor: middle;
+    }
+    @supports (transform: translateZ(20px)) and (animation-delay: 2s) {
+      * {transform-origin: 0 0;}
+      .shields {
+        transform: translate(5px, 5px) scale(1.8);
+      }
+      .shields > * {
+        transform: rotateX(5deg) rotateY(0turn) translateZ(25px);
+        animation: rotate 12s infinite cubic-bezier(0.25, -0.1, 0.74, 1.1);
+        will-change: opacity;
+        perspective: 100px;
+        perspective-origin: 50% 150%;
+      }
+      .shields > *:nth-child(1) {
+        animation-delay: -12s; fill: green;
+      }
+      .shields > *:nth-child(2) {
+        animation-delay: -9s; fill: blue;
+      }
+      .shields > *:nth-child(3) {
+        animation-delay: -6s; fill: purple;
+      }
+      .shields > *:nth-child(4) {
+        animation-delay: -3s;
+      }
+    }
+    @keyframes rotate {
+      15%, 25% {
+        transform: rotateX(5deg) rotateY(0.25turn) translateZ(25px);
+        opacity: 1;
+      }
+      40%, 50% {
+        transform: rotateX(5deg) rotateY(0.50turn) translateZ(25px);
+        opacity: 0;
+      }
+      65%, 75% {
+        transform: rotateX(5deg) rotateY(0.75turn) translateZ(25px);
+        opacity: 1;
+      }
+      90%, 100% {
+        transform: rotateX(5deg) rotateY(1turn) translateZ(25px);
+        opacity: 1;
+      }
+    }
+  </style>
+  <defs>
+    <path id="shield" d="M-20,0 L20,0 16,45 0,50 -16,45 Z"
+           stroke-width="5"/>
+    <linearGradient id="bevel">
+      <stop offset="32%" stop-opacity="0.2" stop-color="#333" />
+      <stop offset="33%" stop-opacity="0" stop-color="#333" />
+      <stop offset="67%" stop-opacity="0" stop-color="#fff" />
+      <stop offset="68%" stop-opacity="0.2" stop-color="#fff" />
+    </linearGradient>
+  </defs>
+  <symbol id="HTML-shield" class="shield" viewBox="-32 -16 64 64">
+    <use xlink:href="#shield" fill="tomato" stroke="firebrick"/>
+    <text fill="white"
+           x="-7 7 -7 7" y="0.9em 1.2em 1.8em 2.1em">HTML</text>
+    <use xlink:href="#shield" fill="url(#bevel)" stroke="url(#bevel)" />
+  </symbol>
+  <symbol id="CSS-shield" class="shield" viewBox="-32 -16 64 64">
+    <title>CSS Shield logo</title>  
+      <use xlink:href="#shield" fill="mediumseagreen" stroke="seagreen"/>
+      <text x="0" y="20" dy="0 10 10" 
+            fill="mediumspringgreen" stroke="darkslategray">CSS</text>
+      <use xlink:href="#shield" fill="url(#bevel)"/>
+      <g fill="mediumseagreen" stroke="darkslategray" font-size="48px" font-weight="normal">
+        <text x="-20" y="40" rotate="-10">{</text>
+        <text x="20" y="40" rotate="10">}</text>
+      </g>
+  </symbol>
+  <symbol id="JS-shield" class="shield" viewBox="-32 -16 64 64">
+      <use xlink:href="#shield" fill="gold" stroke="goldenrod"/>
+      <text fill="black"
+             x="5" y="2em">JS</text>
+      <use xlink:href="#shield" fill="url(#bevel)" stroke="url(#bevel)" />
+  </symbol>
+  <symbol id="SVG-shield" class="shield" viewBox="-32 -16 64 64">
+    <title>SVG Shield logo</title>
+    <defs>
+      <radialGradient id="circle-glow" fx="0.4" fy="0.35">
+        <stop offset="0" stop-color="#ffc" />
+        <stop offset="0.2" stop-color="gold" />
+        <stop offset="1" stop-color="#EDA921" />
+      </radialGradient>
+      <symbol id="crown" viewBox="-125 -125 250 250" overflow="visible">
+        <g stroke-width="38.0086" stroke="#000">
+          <g id="svgstar" >
+            <path id="svgbar" fill="#EDA921" d="M-84.1487,-15.8513 a22.4171,22.4171 0 1 0 0,31.7026 h168.2974 a22.4171,22.4171 0 1 0 0,-31.7026 Z"/>
+            <use xlink:href="#svgbar" transform="rotate(45)"/>
+            <use xlink:href="#svgbar" transform="rotate(90)"/>
+            <use xlink:href="#svgbar" transform="rotate(135)"/>
+          </g>
+        </g>
+        <use xlink:href="#svgstar" />
+        <g fill="url(#circle-glow)">
+          <circle r="20" cx="0" cy="100"/>
+          <circle r="20" cx="0" cy="-100"/>
+          <circle r="20" cx="100" cy="0"/>
+          <circle r="20" cx="-100" cy="0"/>
+          <circle r="20" cx="70.5" cy="70.5"/>
+          <circle r="20" cx="70.5" cy="-70.5"/>
+          <circle r="20" cx="-70.5" cy="70.5"/>
+          <circle r="20" cx="-70.5" cy="-70.5"/>
+        </g>
+      </symbol>
+    </defs>
+    <g id="svg">
+      <use xlink:href="#crown" x="-20" y="-25" width="40" height="40" />
+      <use xlink:href="#shield" fill="navy" stroke="royalBlue"/>
+      <text fill="white" stroke="black"
+            x="0 0 0" dy="0.8em 0.8em 0.8em">SVG</text>
+      <use xlink:href="#shield" fill="url(#bevel)" stroke="url(#bevel)" />
+    </g>
+  </symbol>
+  <g transform="translate(50,0)">
+    <text y="-25" dy="1ex" x="5" role="heading" aria-level="1">Team Web</text>
+    <text y="25" dy="-0.1em" x="5" role="heading" aria-level="2"
+          >HTML, CSS, JS <tspan x="5" y="45">&amp; SVG</tspan></text>
+  </g>
+  <g class="shields">
+    <use xlink:href="#HTML-shield" 
+         x="-20" y="-20" width="40" height="40" 
+         transform="translate(-25,-25)" />
+    <use xlink:href="#CSS-shield"  
+         x="-20" y="-20" width="40" height="40" 
+         transform="translate(+25,-25)" />
+    <use xlink:href="#JS-shield"
+         x="-20" y="-20" width="40" height="40" 
+         transform="translate(-25,+25)" />
+    <use xlink:href="#SVG-shield"
+         x="-20" y="-20" width="40" height="40" 
+         transform="translate(+25,+25)" />
+  </g>
+</svg>

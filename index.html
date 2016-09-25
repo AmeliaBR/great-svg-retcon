@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Great SVG Retcon — A presentation by Amelia Bellamy-Royds</title>
+<style>
+  /* core typography styles */
+body {
+  font-family: Open Sans, sans-serif;
+  line-height: 1.4;
+  scroll-snap-type: proximity;
+  scroll-snap-padding: 2vh 2vw;
+}
+h1, h2, h3, .h, .slide::before {
+  font-family: "Bauhaus 93", "Impact", "Arial Black", sans-serif;
+  line-height: 1.1;
+}
+h1, h2, .h {
+  text-align: center;
+  margin-top: 2em;
+}
+@media not print {
+  /* slide styles */
+  body {
+    background-color: #302;
+    padding: 0.3em;
+  }
+  h1, h2 {
+    text-shadow: royalBlue -2px -1px 0;
+    letter-spacing: 3px;
+    font-size: 300%;
+    margin: 0 5vh 0 2vh;
+  }
+  header p {
+    text-align: center;
+  }
+  .slide {
+    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+
+    position: relative;
+    scroll-snap-align: start;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 96vw;
+    max-width: 40em;
+    height: 96vh;
+    padding: 1em;
+    border-radius: 1em;
+    margin: 2vh auto;
+
+    box-shadow: 0.2em 0.3em 0.5em 0 black;
+    background-color: tomato;
+    background-image: radial-gradient(circle farthest-side, transparent 60%, gold 125%);
+    color:  indigo;
+  }
+  .slide[data-section-slug]::before {
+    content: attr(data-section-slug);
+    display: block;
+    position: absolute;
+    background: lightBlue;
+    box-shadow: indigo 0 0 1em;
+    box-sizing: border-box;
+    padding: 3em 5em 1em;
+    width: 16em;
+    top: 0;
+    right: -8em;
+    text-align: center;
+    transform-origin: center top;
+    transform: rotate(45deg);
+    z-index: 100;
+  }
+  .slide[data-section-slug] {
+    padding-top: 4em;
+  }
+  .slide.text-only {
+    justify-content: center; /* don't add extra spaces between paragraphs */
+  }
+  .slide > * {
+    flex: none; /* default for text paragraphs & headers */
+    margin: 0.2em 0;
+  }
+  .slide > *:first-child {
+    margin-top: 0; /* margin will be set by padding on slide */
+  }
+  .slide > h2:only-child {
+    position: absolute; /* use up parent padding */
+    width: 100%;
+    padding: 10vh 1em;
+    box-sizing: border-box;
+    left: 0;
+    top: calc(50% - 10vh - 0.5em);
+    margin: 0;
+    background: lightBlue;
+  }
+  /* the story, revised */
+  .slide > strong {
+    display: block;
+    background: #ffec80;
+    font-size: 150%;
+    text-align: center;
+    padding: 1em;
+  }
+  ins, del {
+    color: darkRed;
+    font-weight: normal;
+  }
+  ins {
+    text-decoration: none;
+    background: none;
+    font-family: "Segoe Print", "Comic Sans", "Comic Sans MS", sans-serif;
+  }
+  ins code, del code {
+    color: inherit;
+    font-family: Segoe UI, monospace;
+  }
+  .editor2 {
+    color: mediumBlue;
+  }
+  @supports (text-decoration-color: red) {
+    del {color: inherit; text-decoration-color: darkRed;}
+    del.editor2 {color: inherit; text-decoration-color: mediumBlue;}
+  }
+  /* figures and demos */
+  .slide > figure{
+    height: 100%;
+    max-height: 96vh;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+  .slide > figure {
+    display: flex;    
+  }
+  figure > img, figure > object {
+    display: block;
+    object-fit: contain;
+    object-position: center center;
+    max-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 0;
+  }
+  /* credit lines for images */
+  .slide small {
+    font-size: 75%;
+    display: block;
+    margin-left: auto;
+    text-align: right;
+    max-width: 70%;
+  }
+  table {
+    font-size: 80%;
+    line-height: 1.1;
+    background: lightBlue;
+    border-collapse: collapse;
+    margin: auto;
+  }
+  td, th {
+    border: solid royalBlue;
+    padding: 0.25em 0.5em;
+  }
+  th {
+    font-weight: bold;
+    background: indigo;
+    color: lightBlue;
+  }
+  li > p {
+    margin: 0.3em 0;
+  }  
+  pre {
+    background: indigo;
+    color: lightBlue;
+    padding: 0.5em;
+    margin: 0.2em;
+    white-space: pre-wrap;
+    overflow: auto;
+    flex: 1;
+  }
+  :not(a):focus {
+      outline: none;
+      border-right: solid #302;
+  }
+  :link { color: darkblue;}
+}
+@media (min-width: 30em) {
+    html {
+        font-size: 150%;
+    }
+    li li {
+        font-size: 80%;
+    }
+    .slide {
+        padding: 1em 2em;
+    }
+}
+@media (min-width: 50em) AND (min-height: 40em) {
+    html {
+        font-size: 200%;
+    }
+    .slide {
+        padding: 1em 3em;
+    }
+}
+</style>
+<style media="print">
+    .slide {
+        break-inside: auto;
+    }
+    a:link, a:visited {
+       color: inherit;
+       text-decoration: none;
+    }
+    a:link::after {
+        content: " (" attr(href) ")";
+    }
+    a.literal::after {
+        content: normal;
+    }
+    h2 br, h3 br {display: none;}
+    .switch, .switch-label {display: none;}    
+</style>
+<!-- CodeMirror syntax highlighting styles -->
+<link rel="stylesheet" href="hopscotch.css" media="screen" />
+</head>
+<body class="cm-s-hopscotch">
+<main>
+  <div class="slide">
+    <object type="image/svg+xml" data="images/SVGRetCon-title.svg"></object>
+  </div>
+  <header class="slide">
+    <h1>The Great SVG RetCon</h1>
+    <p>A presentation by<br>
+      Amelia Bellamy-Royds<br>
+      at<br>
+      CSSConf USA 2016<br>
+      (Boston, 27 September)</p>
+  </header>
+  <section id="intro">
+    <div class="slide">
+      <object type="image/svg+xml" data="images/SVGRetCon-title.svg"></object>
+    </div>
+    <div class="slide" data-section-slug="The RetCon">
+      <figure>
+        <img src="images/movie-mistakes-avengers-CptAmerica-Suit.jpg" alt="Image from MovieMistakes.com, comparing two screenshots from The Avengers, with Captain America's damaged uniform circled in one shot, and the same part of his uniform circled, undamaged, in the second shot. Text says: The Avengers, Damaged suit repairs itself after battle.">
+      </figure>
+      <small>From <cite>The Avengers</cite>, as captured for <a href="http://www.moviemistakes.com/picture183410">MovieMistakes.com</a>  by THGhost</small>
+    </div>
+    <div class="slide" data-section-slug="The RetCon">
+      <p>Retroactive: Because sometimes you need to fix the past.</p>
+      <figure>
+        <img src="images/Back-to-the-future_screenshot.jpg" alt="Screenshot from Back to the Future, showing mad-scientist Doc and teenaged Marty McFly, standing outside at night, both looking up in concern at something behind the camera." />
+      </figure>
+      <small><cite>Back to the Future</cite> (screenshot)</small>
+    </div>
+    <div class="slide" data-section-slug="The RetCon">
+      <figure>
+        <img src="images/agents-shield-promo.jpg" alt="Agents of Shield promo poster, featuring Clark Gregg's Agent Coulson front and center.">
+      </figure>
+      <small><cite>Marvel's Agents of Shield</cite> (promo poster)</small>
+    </div>
+    <div class="slide" data-section-slug="The RetCon">
+      <figure>
+        <img src="images/avengers-Coulson_death_38.png" alt="Film still of Agent Coulson's death scene in The Avengers.">
+      </figure>
+      <small><cite>The Avengers</cite> (screenshot)</small>
+    </div>
+  </section>
+  <section id="retcon-the-web">
+    <div class="slide">
+      <h2>RetCon-ing the Web</h2>
+    </div>
+    <div class="slide" data-section-slug="&amp; the Web">
+      <figure>
+        <img src="images/XML-yellow-screen.png" alt="Screenshot of browser yellow-screen warning for XML well-formedness errors.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="&amp; the Web">
+      <figure>
+        <img src="images/XML-pink-box.png" alt="Screenshot of browser pink-box warning for XML validity errors.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="&amp; the Web">
+      <figure style="display: flex;">
+        <div style="flex-basis: 50%; display: flex; flex-direction: column">
+          <h3 style="height: 2.2em; margin: 0.5em 0; max-width: 80%">What you say to old browsers:</h3>
+          <pre class="lang-xml has-code" style="flex-grow: 1"><code class="html cm-s-default" data-lang="xml"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">picture</span><span class="cm-tag cm-bracket">&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">source</span> <span class="cm-attribute">media</span>=<span class="cm-string">"(min-width: 650px)"</span> <span class="cm-attribute">srcset</span>=<span class="cm-string">"images/kitten-large.png"</span> <span class="cm-tag cm-bracket">/&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">source</span> <span class="cm-attribute">media</span>=<span class="cm-string">"(min-width: 465px)"</span> <span class="cm-attribute">srcset</span>=<span class="cm-string">"images/kitten-medium.png"</span> <span class="cm-tag cm-bracket">/&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">img</span> <span class="cm-attribute">src</span>=<span class="cm-string">"images/kitten-small.png"</span> <span class="cm-attribute">alt</span>=<span class="cm-string">"a cute kitten"</span> <span class="cm-tag cm-bracket">/&gt;</span><br><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">picture</span><span class="cm-tag cm-bracket">&gt;</span><br></code></pre>
+        </div>
+        <div style="flex-basis: 50%; display: flex; flex-direction: column">
+          <h3 style="height: 2.2em; margin: 0.5em 0; max-width: 80%">What they hear:</h3>
+          <pre class="lang-xml has-code" style="flex-grow: 1"><code class="html cm-s-default" data-lang="xml"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">blah</span><span class="cm-tag cm-bracket">&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">blah-blah</span> <span class="cm-tag cm-bracket">/&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">blah-blah</span> <span class="cm-tag cm-bracket">/&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">img</span> <span class="cm-attribute">src</span>=<span class="cm-string">"images/kitten-small.png"</span> <span class="cm-attribute">alt</span>=<span class="cm-string">"a cute kitten"</span> <span class="cm-tag cm-bracket">/&gt;</span><br><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">blah</span><span class="cm-tag cm-bracket">&gt;</span><br></code></pre>
+        </div>
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="&amp; the Web">
+      <figure><img src="images/SVG2-CR.png" alt="Screenshot of the main page of the W3C SVG 2 spec online, a Candidate Recommendation as of 15 September 2016."></figure>
+      <small><a href="https://www.w3.org/TR/SVG2/">www.w3.org/TR/SVG2</a></small>
+    </div>
+  </section>
+  <section id="markup">
+    <div class="slide">
+      <h2>Markup</h2>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <strong>SVG is XML</strong>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <strong>SVG is <ins>a document model, which can be expressed in</ins> XML <ins>or HTML markup</ins></strong>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <p>Stand-alone SVG files <em>are</em> XML!</p>      
+      <figure>
+        <img src="images/xml-vs-html.gif" alt="Animated screenshot of browser yellow-screen warning for XML validation errors, versus the same file displaying perfectly well with a .html extension.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <p>Use your browser's parser to clean up sloppy HTML markup</p>
+      <figure>
+        <img src="images/ungolfing-svg.gif" alt="Animated screenshot showing horrific SVG-in-HTML markup (from a how-short-can-you-make-this-code competition) being converted to valid XML using Firefox dev tools" />
+      </figure>
+      <p>(Or just use MS Edge's Save Picture As… option)</p>
+    </div>
+    <div class="slide text-only" data-section-slug="Markup">
+      <p>Don't use XML prefixes for SVG or HTML elements in HTML markup.</p>
+      <p>For namespaced attributes, only use:</p>
+      <ul>
+        <li><code>xlink:href</code></li>
+        <li><code>xml:lang</code></li>
+      </ul>      
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <p>Clean up extra XML bloat before pasting into HTML!</p>
+      <figure>
+        <pre class="lang-xml has-code"><code class="xml cm-s-default" data-lang="xml"><span class="cm-meta">&lt;?xml</span> <span class="cm-meta">version="1.0" encoding="utf-8"?&gt;</span><br><span class="cm-comment">&lt;!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --&gt;</span><br><span class="cm-meta">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [</span><br>    <span class="cm-meta">&lt;!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/"&gt;</span><br>    <span class="cm-meta">&lt;!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/"&gt;</span><br><span class="cm-meta">]&gt;</span><br><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">svg</span> <span class="cm-attribute">version</span>=<span class="cm-string">"1.1"</span> <span class="cm-attribute">id</span>=<span class="cm-string">"Ebene_1"</span> <span class="cm-attribute">xmlns:x</span>=<span class="cm-string">"&amp;ns_extend;"</span> <span class="cm-attribute">xmlns:i</span>=<span class="cm-string">"&amp;ns_ai;"</span> <span class="cm-attribute">xmlns:graph</span>=<span class="cm-string">"&amp;ns_graphs;"</span><br>     <span class="cm-attribute">xmlns</span>=<span class="cm-string">"http://www.w3.org/2000/svg"</span> <span class="cm-attribute">xmlns:xlink</span>=<span class="cm-string">"http://www.w3.org/1999/xlink"</span> <span class="cm-attribute">x</span>=<span class="cm-string">"0px"</span> <span class="cm-attribute">y</span>=<span class="cm-string">"0px"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"566.93px"</span><br>     <span class="cm-attribute">height</span>=<span class="cm-string">"283.46px"</span> <span class="cm-attribute">viewBox</span>=<span class="cm-string">"0 0 566.93 283.46"</span> <span class="cm-attribute">enable-background</span>=<span class="cm-string">"new 0 0 566.93 283.46"</span> <span class="cm-attribute">xml:space</span>=<span class="cm-string">"preserve"</span><span class="cm-tag cm-bracket">&gt;</span><br><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">switch</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">foreignObject</span> <span class="cm-attribute">requiredExtensions</span>=<span class="cm-string">"&amp;ns_ai;"</span> <span class="cm-attribute">x</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">y</span>=<span class="cm-string">"0"</span> <span class="cm-attribute">width</span>=<span class="cm-string">"1"</span> <span class="cm-attribute">height</span>=<span class="cm-string">"1"</span><span class="cm-tag cm-bracket">&gt;</span><br>        <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">i:pgfRef</span>  <span class="cm-attribute">xlink:href</span>=<span class="cm-string">"#adobe_illustrator_pgf"</span><span class="cm-tag cm-bracket">&gt;</span><br>        <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">i:pgfRef</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">foreignObject</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">g</span> <span class="cm-attribute">i:extraneous</span>=<span class="cm-string">"self"</span><span class="cm-tag cm-bracket">&gt;</span><br>      <span class="cm-comment">&lt;!-- actual SVG stuff used by browser is here --&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">g</span><span class="cm-tag cm-bracket">&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">switch</span><span class="cm-tag cm-bracket">&gt;</span><br>  <span class="cm-comment">&lt;!-- more Adobe proprietary blobs were here --&gt;</span><br><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">svg</span><span class="cm-tag cm-bracket">&gt;</span><br></code></pre>
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <p>XML or HTML, all SVG elements can be self-closed — <em>but none close automatically!</em></p>      
+      <figure>
+        <pre class="lang-xml has-code"><code class="html cm-s-default" data-lang="xml">  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">svg</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">g</span> <span class="cm-tag cm-bracket">/&gt;</span> <span class="cm-comment">&lt;!-- That's a perfectly valid empty group --&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">rect</span> <span class="cm-attribute">width</span>=<span class="cm-string">"100"</span> <span class="cm-attribute">height</span>=<span class="cm-string">"80"</span> <span class="cm-attribute">fill</span>=<span class="cm-string">"blue"</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">circle</span> <span class="cm-attribute">cx</span>=<span class="cm-string">"50"</span> <span class="cm-attribute">r</span>=<span class="cm-string">"35"</span> <span class="cm-attribute">fill</span>=<span class="cm-string">"red"</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">text</span> <span class="cm-attribute">y</span>=<span class="cm-string">"50%"</span><span class="cm-tag cm-bracket">&gt;</span>This text and the circle won't render, <br>          because they are invalid children of the rect.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">text</span><span class="cm-tag cm-bracket">&gt;</span><br>  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag cm-error">svg</span><span class="cm-tag cm-bracket cm-error">&gt;</span><br></code></pre>
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Markup">
+      <p>Namespaces <em>always</em> matter when scripting!</p>
+      <p>But, <code>innerHTML</code> triggers the parser.</p>
+      <figure style="flex-direction: column">
+        <pre class="lang-javascript has-code"><code class="js cm-s-default" data-lang="javascript">  <span class="cm-keyword">var</span> <span class="cm-def">ns</span> <span class="cm-operator">=</span> {<span class="cm-property">svg</span>: <span class="cm-string">"http://www.w3.org/2000/svg"</span>,<br>            <span class="cm-property">xlink</span>: <span class="cm-string">"http://www.w3.org/1999/xlink"</span>};<br>  <span class="cm-keyword">var</span> <span class="cm-def">u</span> <span class="cm-operator">=</span> <span class="cm-variable">createElementNS</span>(<span class="cm-variable">ns</span>.<span class="cm-property">svg</span>, <span class="cm-string">"use"</span>);<br>  <span class="cm-variable">u</span>.<span class="cm-property">setAttributeNS</span>(<span class="cm-variable">ns</span>.<span class="cm-property">xlink</span>, <span class="cm-string">"href"</span>, <span class="cm-string">"#icon"</span>);<br></code></pre>
+        
+        <pre class="lang-javascript has-code"><code class="js cm-s-default" data-lang="javascript">  <span class="cm-keyword">var</span> <span class="cm-def">wrapper</span> <span class="cm-operator">=</span> <span class="cm-variable">document</span>.<span class="cm-property">createElement</span>(<span class="cm-string">"div"</span>);<br>  <span class="cm-variable">wrapper</span>.<span class="cm-property">innerHTML</span> <span class="cm-operator">=</span> <span class="cm-string">"&lt;svg&gt;&lt;use xlink:href='#icon'/&gt;&lt;/svg&gt;"</span><br>  <span class="cm-keyword">var</span> <span class="cm-def">u</span> <span class="cm-operator">=</span> <span class="cm-variable">wrapper</span>.<span class="cm-property">querySelector</span>(<span class="cm-string">"use"</span>);<br></code></pre>
+      </figure>
+    </div>
+  </section>
+  <section id="links">
+    <div class="slide">
+      <h2>Links</h2>
+    </div>
+    <div class="slide" data-section-slug="Links">
+      <strong>SVG uses the XLink <code>href</code> attribute to create simple links</strong>
+    </div>
+    <div class="slide" data-section-slug="Links">
+      <strong>SVG uses the <del>XLink</del> <code>href</code> attribute to create <del>simple</del> links</strong>
+    </div>
+    <div class="slide" data-section-slug="Links">
+      <p>Sorry…</p>
+      <figure>
+        <img src="images/twitter-what-to-do-with-xlink.png" alt="Screenshot of linked Twitter conversation, Ryan Yu asking what to do about Safari requiring xlink prefix">
+      </figure>
+      <small>from <a href="https://mobile.twitter.com/iamryanyu/status/779091522742460416">@iAmRyanYu</a>, last week</small>
+    </div>
+    <div class="slide" data-section-slug="Links">
+      <p>Yes: MS Edge, Chrome 50+, Firefox 51+ (Nightly)</p>
+      <p>No: Safari, Internet Explorer, Firefox &le; 50</p>
+      <figure>
+        <img src="images/xlink-href-browser-test.png" alt="Screenshot of href without Xlink browser test, from the linked CodePen, in supporting and unsupporting browsers (Chrome 52 vs Firefox 50)">
+      </figure>
+      <small>Test it yourself: <a href="http://codepen.io/AmeliaBR/full/MKRqBE/">codepen.io/AmeliaBR/full/MKRqBE/</a></small>
+    </div>
+  </section>
+  <section id="styles">
+    <div class="slide">
+      <h2>Styles</h2>
+    </div>
+    <div class="slide" data-section-slug="Styles">
+      <strong>SVG styles can be defined with CSS properties or XML attributes</strong>
+    </div>
+    <div class="slide" data-section-slug="Styles">
+      <strong>SVG styles <del>can be</del> <ins>are</ins> defined with CSS properties<ins>, some of which have presentation</ins> <del>or XML</del> attributes</strong>
+    </div>
+    <div class="slide" data-section-slug="Styles">
+      <p>Any supported CSS syntax should be supported in SVG.</p>
+      <figure>
+        <pre class="lang-css has-code"><code class="css cm-s-default" data-lang="css"><span class="cm-qualifier">.icon</span> {<br>  <span class="cm-property">fill</span>: <span class="cm-atom">currentColor</span>;<br>  <span class="cm-property">fill</span>: <span class="cm-atom">var</span>(<span class="cm-variable-2">--icon-color</span>, <span class="cm-atom">currentColor</span>);<br>}<br><span class="cm-tag">svg</span> *:<span class="cm-variable-3">link</span> {<br>  <span class="cm-property">text-decoration</span>: <span class="cm-atom">underline</span> <span class="cm-atom">overline</span>;<br>}<br><span class="cm-def">@supports</span> (<span class="cm-property">text-decoration-style</span>: <span class="cm-error">wavy</span>) {<br>  <span class="cm-tag">svg</span> *:<span class="cm-variable-3">link</span> {<br>    <span class="cm-property">text-decoration</span>: <span class="cm-variable">wavy</span> <span class="cm-atom">underline</span>;<br>  }<br>}<br></code></pre>
+      </figure>
+    </div>
+  </section>
+  <section id="geometry">
+    <div class="slide">
+      <h2>Geometry</h2>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+      <strong>Geometric structure is defined in SVG markup</strong>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+      <p>Changing geometry changes the drawing.</p>
+      <p>Changing styles just adds a little flair…</p>
+      <figure>
+        <img src="images/structure-vs-presentation.svg" style="background: white"
+             alt="Three simplistic SVG drawings: first is a Cat face; second is a copy of the cat face in which the ears have been elongated and the whiskers have been shortened to create a Rabbit face; third is a copy of the cat face, colored purple and with extra thick lines, but still unmistakably a cat face.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+      <strong><del>Geometric</del> <ins>Document</ins> structure is defined in SVG markup<ins>; geometry is defined by geometric styles or their presentation attributes</ins></strong>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+      <p>Same attribute names, on different elements, with different effects:</p>
+      <figure>
+        <img src="images/rx-ry.svg" alt="SVG rectangle and ellipse, with the rx and ry dimensions marked out">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+      <p>Same attribute names, on different elements, with different defaults:</p>
+      <figure>
+        <img src="images/rx-without-ry.svg" alt="The same SVG, but with the ry attribute removed. The rectangle now has symmetrical corner curves, but the ellipse has disappeared.  Unless you're viewing this on a future browser that has actually implemented the new SVG 2 rules.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Geometry">
+<p id="property-table-caption">SVG geometry properties (that can be set with CSS)</p>
+      <figure>
+<table aria-labelledby="property-table-caption">
+<thead>
+  <tr>
+    <th scope="col">Property</th>
+    <th scope="col">Elements with presentation attribute</th>
+    <th scope="col">Elements with ordinary attribute <em>only</em></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>width</td>
+    <td rowspan="4">rect, image, foreignObject, svg, symbol, use</td>
+    <td rowspan="2">pattern, mask, filter, and filter effect (fe*) elements</td>
+  </tr>
+  <tr>
+    <td>height</td>
+    <!-- -->
+    <!-- -->
+  </tr>
+  <tr>
+    <td>x</td>
+    <!-- -->
+    <td rowspan="2">All above, plus text, tspan, hatch, meshgradient, cursor</td>
+  </tr>
+  <tr>
+    <td>y</td>
+    <!-- -->
+    <!-- -->
+  </tr>
+  <tr>
+    <td>cx</td>
+    <td rowspan="2">circle, ellipse</td>
+    <td rowspan="3">radialGradient</td>
+  </tr>
+  <tr>
+    <td>cy</td>
+    <!-- -->
+    <!-- -->
+  </tr>
+  <tr>
+    <td>r</td>
+    <td>circle</td>
+    <!-- -->
+  </tr>
+  <tr>
+    <td>rx</td>
+    <td rowspan="2">ellipse, rect</td>
+    <td rowspan="2">(none)</td>
+  </tr>
+  <tr>
+    <td>ry</td>
+    <!-- -->
+    <!-- -->
+  </tr>
+  <tr>
+    <td>d</td>
+    <td>path</td>
+    <td>hatchpath</td>
+  </tr>
+</tbody>
+</table>
+      </figure>
+    </div>
+  </section>
+  <section id="transforms">
+    <div class="slide">
+      <h2>Transforms</h2>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <strong>The SVG coordinate system can be manipulated with the <code>transform</code> attribute</strong>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <strong>The <del>SVG</del> coordinate system can be manipulated with the <code>transform</code> <ins>and <code>transform-origin</code></ins> <del>attribute</del> <ins>properties, or with a <code>transform</code> presentation attribute</ins></strong>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p>SVG layout, &amp; SVG transforms, are based on a coordinate system.</p>
+      <p>CSS doesn't always have a coordinate system.</p>
+    <!--
+      <figure>
+        <img src="images/" alt="SVG Coordinate system vs CSS boxes">
+      </figure>
+    -->
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p>For an off-center shape in a centered SVG coordinate system…</p>
+      <figure>
+        <pre class="lang-xml has-code"><code class="xml cm-s-default" data-lang="xml"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">svg</span> <span class="cm-attribute">viewBox</span>=<span class="cm-string">"-35 -35 70 70"</span><span class="cm-tag cm-bracket">&gt;</span><br>    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">polygon</span> <span class="cm-attribute">points</span>=<span class="cm-string">"-10,-10 0,-15 5,-30 10,-15, </span><br>                      <span class="cm-string">20,-10 10,-5 5,10, 0,-5"</span> <span class="cm-tag cm-bracket">/&gt;</span><br><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">svg</span><span class="cm-tag cm-bracket">&gt;</span><br></code></pre>
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p>You get different transform-box sizes and different box origins:</p>
+      <figure>
+        <img src="images/transform-box.svg" alt="Side-by-side diagrams labelled view-box and fill-box, showing the identical polygon and axis lines, as described, but different annotations for the width, height, and 0,0 point of the box.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <strong>The <del>SVG</del> coordinate system can be manipulated with the <code>transform</code><ins class="editor2">,</ins> <ins><del class="editor2">and</del> <code>transform-origin</code></ins><ins class="editor2"> and <code>transform-box</code></ins> <del>attribute</del> <ins>properties, or with a <code>transform</code> presentation attribute</ins></strong>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p id="transform-syntax-table-caption">Examples of equivalent transforms, old versus new syntax</p>
+      <figure>
+<table aria-labelledby="transform-syntax-table-caption">
+<thead>
+  <tr>
+    <th scope="col">SVG 1.1</th>
+    <th scope="col">CSS Transforms</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="3">translate( 16, 0 )</td>
+    <td>translate( 16px, 0 )</td>
+  </tr>
+  <tr>
+    <td>translate( 12pt, 0 )</td>
+  </tr>
+  <tr>
+    <td>translateX( 16px )</td>
+  </tr>
+  <tr>
+    <td rowspan="3">rotate( 90 )</td>
+    <td>rotate( 90deg )</td>
+  </tr>
+  <tr>
+    <td>rotate( 0.25turn )</td>
+  </tr>
+  <tr>
+    <td>rotateZ( 90deg )</td>
+  </tr>
+  <tr>
+    <td>scale( 2 )</td>
+    <td>scale( 2 )</td>
+  </tr>
+  <tr>
+    <td>scale( 1, -1 )</td>
+    <td>scaleY( -1 )</td>
+  </tr>
+</tbody>
+</table>
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p>3D Transforms are fun! (but very buggy)</p>
+      <figure>
+        <img src="images/3D-transforms-with-fallback.svg" alt="On the right, the text: Team Web — HTML, CSS, JS &amp; SVG. On the left, shield-shaped logos for each of the languages.  If your browser supports it, the logos rotate in 3D space, as if they are on sides of a cube, each one taking a turn in front.  If 3D transformations are not supported, the logos are smaller, laid out in a square.">
+      </figure>
+    </div>
+    <div class="slide" data-section-slug="Transforms">
+      <p>Fallback layout uses the <code>transform</code> attribute:</p>
+      <figure>
+        <img src="images/3D-transforms-fallback-version.gif" alt="This is an animated screenshot of the fallback layout: on the left, 4 logos in a square, fading in and out in turn.  On the right, the text is unchanged: Team Web — HTML, CSS, JS &amp; SVG.">
+      </figure>
+    </div>
+  </section>
+  <section id="and-more">
+    <div class="slide">
+      <h2>There's much more…</h2>
+      <div style="overflow-y: auto; flex: 1;">
+        <ul>
+          <li><code>paint-order</code> (good support) and <code>z-index</code> (no support)</li>
+          <li>CSS-crossover graphical effects (filters, masking, clip-paths)</li>
+          <li>Blend modes instead of filters</li>
+          <li>Wrapping text in a shape!</li>
+          <li>SVG-in-OpenType fonts (old SVG Fonts are dead)</li>
+          <li>Proper keyboard support</li>
+          <li>Better accessibility guidance</li>
+          <li>Unified approach to Web Animations, CSS or SMIL-like elements</li>
+          <li>Overhauled SVG DOM. Many features <em>removed</em>. Replacements pending…</li>
+          <li>New paint servers: mesh gradients and hatches</li>
+          <li>Context paint, to coordinate line markers and multi-shape icons</li>
+          <li>Coming soon: SVG paint servers for CSS elements, filled &amp; stroked CSS text, CSS images and multiple layers for SVG fill &amp; stroke</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!--
+  <section id="XXX">
+    <div class="slide">
+      <h2></h2>
+    </div>
+    <div class="slide" data-section-slug="XXX">
+      <p></p>
+      <figure></figure>
+    </div>
+  </section>
+-->
+<footer class="slide">
+<h2 id="_about-me_">About Me</h2>
+<p>Amelia Bellamy-Royds</p>
+<ul style="margin-bottom: auto;">
+<li>Author &amp; Web Standards Editor</li>
+<li>W3C Invited Expert, SVG and ARIA working groups</li>
+<li><a href="http://www.oreilly.com/pub/au/6190">Books on SVG from O'Reilly Media</a></li>
+<li><a href="https://twitter.com/AmeliasBrain">@AmeliasBrain</a></li>
+<li><a href="mailto:amelia.bellamy.royds@gmail.com">amelia.bellamy.royds@gmail.com</a></li>
+<li>These slides: <a href="https://ameliabr.github.io/great-svg-retcon/">ameliabr.github.io/great-svg-retcon</a></li>
+</ul>
+</footer>
+</main>
+    <script>
+(function(){
+    var initialized = false;  
+    var interactiveStyles = document.getElementById("interactive-styles");
+    var controlsSelector = ".tab-controls",
+        slideSelector = ".slide", 
+        pointsSelector = ".slide > ul > li, .slide > ol > li, .slide > pre";
+    
+    function addTabIndex(selector) {
+        var points = document.querySelectorAll(selector);
+        for (var i=0, n=points.length; i<n; i++) {
+            points[i].setAttribute("tabIndex", 0);
+        }
+        return points;
+    }
+    function removeTabIndex(selector) {        
+        var points = document.querySelectorAll(selector);
+        for (var i=0, n=points.length; i<n; i++) {
+            points[i].removeAttribute("tabIndex");
+        }
+        return points;
+    }
+    
+    //add tabIndex to slides
+    //scroll slide into place whenever heading gets focus
+    var slides = addTabIndex(slideSelector);
+    for (var i=0, n=slides.length; i<n; i++){
+        slides[i].addEventListener("focus", scrollSlide);
+    }
+    
+    function scrollSlide(e){
+        scrollTo(window.scrollX, e.target.offsetTop - 10);
+    }
+    
+})();
+    </script>
+</body>
+</html>

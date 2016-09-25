@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:lang="en"
+     viewBox="0 0 160 90" width="1600" height="900" >
+  <style>
+    svg:root {
+      background: lightSkyBlue;
+      width: 100%;
+      max-height: 100vh;
+      font-size: 14px;
+    }
+    symbol, marker, svg {
+      overflow: visible;
+    }
+    polygon {
+      fill: tomato;
+      stroke: fireBrick;
+    }
+    .backdrop {
+      fill: gold;
+      stroke: none;
+    }
+    .annotation-line {
+      fill: none;
+      stroke: indigo;
+    }
+    .axis-line {
+      fill: none;
+      stroke: tomato;
+      stroke-width: 0.5;
+      stroke-dasharray: 3 2;
+      stroke-linecap: round;
+      stroke-dashoffset: 1.5;
+    }
+    .with-cross-lines * {
+      marker: url(#cross-line);
+    }
+    text {
+      fill: indigo;
+      text-anchor: middle;
+      font-family: Consolas, monospace;
+    }
+    .smaller-text {
+      font-size: 50%;
+    }
+    .left {
+      text-anchor: start;
+    }
+    .right {
+      text-anchor: end;
+    }
+  </style>
+  <marker id="cross-line" orient="auto">
+    <path class="annotation-line" d="M0,-2 V2" />
+  </marker>
+  <symbol id="x-pointer">
+    <path class="annotation-line" d="M-1,-1 1,1 M-1,1 1,-1" />
+  </symbol>
+  
+  <svg viewBox="-35 -35 70 70" x="5" y="5" width="70" height="70">
+    <g id="coordinate-system">
+      <rect class="backdrop" x="-35" y="-35" width="70" height="70" />
+      <path class="axis-line" d="M-35,0 L35,0 M0,-35 L 0,35" />
+    </g>
+    <polygon id="shape" points="-10,-10 0,-15 5,-30 10,-15, 20,-10 10,-5 5,10, 0,-5" />
+    <use xlink:href="#x-pointer" />
+    <text class="smaller-text right" dy="1em">(0,0)</text>
+    <g class="annotation-line with-cross-lines">
+      <path d="M-35,25 H35" />
+      <path d="M-25,-35 V35" />
+    </g>
+    <g class="smaller-text">
+      <text y="25" x="15" dy="1em">100% x</text>
+      <text transform="translate(-25,-15)rotate(-90)" dy="1em">100% y</text>
+    </g>
+    <text y="50%" dy="0.8em">view-box</text>
+  </svg>
+  <svg viewBox="-35 -35 70 70" x="85" y="5" width="70" height="70">
+    <use xlink:href="#coordinate-system" />
+    <use xlink:href="#shape" />
+    <use xlink:href="#x-pointer" x="-10" y="-30"/>
+    <text class="smaller-text" x="-10" y="-30" dy="1em">(0,0)</text>
+    <g class="annotation-line with-cross-lines">
+      <path d="M-10,10 H20" transform="translate(0,2)" />
+      <path d="M20,-30 V10" transform="translate(2,0)" />
+    </g>
+    <g class="smaller-text">
+      <text y="12" x="5" dy="1em">100% x</text>
+      <text transform="translate(22,-10)rotate(-90)" dy="1em">100% y</text>
+    </g>
+    <text y="50%" dy="0.8em">fill-box</text>
+  </svg>
+  
+</svg>

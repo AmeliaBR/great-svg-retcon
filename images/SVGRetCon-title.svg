@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     xml:lang="en"
+     viewBox="-80 0 160 90">
+  <title>The Great SVG RetCon (title slide)</title>
+<style>
+  svg {
+    text-anchor: middle;
+    font: 36px "Bauhaus 93", "Impact", "Arial Black", sans-serif;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+  }
+  text {
+    fill: indigo;
+    stroke: royalBlue;
+    stroke-width: calc(1em / 36);
+  }
+  .contrast {
+    fill: royalBlue;
+    stroke: indigo;
+    paint-order: stroke;
+    stroke-width: calc(1em / 18);
+    filter: url(#shadows-light);
+  }
+</style>
+  <filter id="shadows-light" width="150%" height="150%">
+    
+    <feFlood flood-color="#004" flood-opacity="0.5" />
+    <feComposite operator="in" in2="SourceAlpha" />
+    <feOffset dx="5" dy="5" />
+    <feGaussianBlur stdDeviation="2" result="shadow"/>
+    
+    <feFlood flood-color="#ddf" />
+    <feComposite operator="in" in2="SourceAlpha" />
+    <feOffset dx="-0.3" dy="-0.3" result="edge-highlight" />
+    
+    <feMorphology operator="erode" radius="2.5" in="SourceGraphic" />
+    <feOffset dx="-2" dy="-2" />
+    <feColorMatrix type="matrix"
+                   values="1 0 0 0.5 0
+                           0 1 0 0.5 0
+                           0 0 1 0.5 0
+                           0 0 0 0.5   0" />
+    <feGaussianBlur stdDeviation="1.5" />
+    <feComposite operator="in" in2="SourceAlpha" result="top-highlight" />
+    
+    <feMerge>
+      <feMergeNode in="shadow" />
+      <feMergeNode in="edge-highlight" />
+      <feMergeNode in="SourceGraphic" />
+      <feMergeNode in="top-highlight" />
+    </feMerge>
+  </filter>
+  <defs>
+    <path id="upper-curve" 
+          d="M-80,70 Q0,-10 80,70"/>
+    <path id="lower-curve" 
+          d="M-80,70 Q0,100 80,70"/>
+  </defs>
+  <!--<rect x="-100%" y="-100%" width="300%" height="300%" 
+        fill="tomato"/>-->
+  <text x="-49%" y="0.9em" font-size="50%"
+        style="text-anchor: start"
+        >The</text>
+  <text>
+    <textPath xlink:href="#upper-curve" startOffset="50%"
+              letter-spacing="-0.03em"
+              >Great</textPath></text>
+  <g opacity="0.001">
+    <text id="text-SVG" class="contrast"
+          y="50%" dy="0.4em" dx="0 0.07em 0" font-size="125%"
+          >SVG</text>
+  </g>
+  <text>
+    <textPath xlink:href="#lower-curve" startOffset="50%"
+              >RetCon</textPath></text>
+  <use xlink:href="#text-SVG" aria-hidden="true"/>
+</svg>

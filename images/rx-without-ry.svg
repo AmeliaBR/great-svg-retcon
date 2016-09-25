@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xml:lang="en"
+     viewBox="0 0 160 90" width="1600" height="900" >
+  <style>
+    svg:root {
+      background: lightSkyBlue;
+      width: 100%;
+      max-height: 100vh;
+    }
+    rect, ellipse {
+      fill: tomato;
+      stroke: fireBrick;
+    }
+    path, line {
+      fill: none;
+      stroke: indigo;
+    }
+    .with-cross-lines * {
+      marker: url(#cross-line);
+    }
+    text {
+      fill: indigo;
+      text-anchor: middle;
+      font-family: Consolas, monospace;
+    }
+    .smaller-text {
+      font-size: 60%;
+    }
+    .left {
+      text-anchor: start;
+    }
+  </style>
+  <marker id="cross-line" orient="auto" overflow="visible">
+    <path d="M0,-2 V2" />
+  </marker>
+  <rect x="5" y="5" width="75" height="60" rx="15px"/>
+  <g class="with-cross-lines">
+    <line transform="translate(5,5)translate(2,0)" 
+          x1="15px" x2="15px" y1="0" y2="15px" />
+    <line transform="translate(5,5)translate(0,2)" 
+          x1="0" x2="15px" y1="15px" y2="15px" />
+  </g>
+  <g class="smaller-text">
+    <text transform="translate(5,5)" class="left"
+          x="15px" y="7.5px" dx="1ex" dy="0.5ex">ry</text>
+    <text transform="translate(5,5)"
+          x="7.5px" y="15px" dy="1em">rx</text>
+  </g>
+  <ellipse cx="120" cy="35" rx="15px" />
+  <g class="with-cross-lines">
+    <line transform="translate(120,35)translate(2,0)" 
+         y1="0" y2="-15px" />
+    <line transform="translate(120,35)translate(0,2)" 
+          x1="0" x2="-15px" />
+  </g>
+  <g class="smaller-text">
+    <text transform="translate(120,35)" class="left"
+          y="-7.5px" dx="1ex" dy="0.5ex">ry</text>
+    <text transform="translate(120,35)"
+          x="-7.5px" dy="1em">rx</text>
+  </g>
+  <text x="50%" y="85">rx="15px" (no ry)</text>
+</svg>
