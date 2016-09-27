@@ -86,7 +86,7 @@
 - **SVG styles are defined ...** (_read!_)
 - CSS required _for software_
 - No new presentation attributes
-- CSS-in-SVG automatically upgrades
+- **CSS-in-SVG automatically upgrades**
 - Use CSS fallback methods
 - But where?
 - Img must be same file
@@ -148,6 +148,7 @@ similar to transform
 - **SVG layout vs CSS**
 - Firefox: continuity
 - Blink/WebKit: consistency(-ish)
+- Microsoft: Nothing (yet)
 - Solution: transform-box!
 - **view-box vs fill-box: setup**
 - **view-box vs fill-box: figure**

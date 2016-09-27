@@ -126,7 +126,7 @@
     <li><strong>SVG styles are defined ...</strong> (<em>read!</em>)</li>
     <li>CSS required <em>for software</em></li>
     <li>No new presentation attributes</li>
-    <li>CSS-in-SVG automatically upgrades</li>
+    <li><strong>CSS-in-SVG automatically upgrades</strong></li>
     <li>Use CSS fallback methods</li>
     <li>But where?</li>
     <li>Img must be same file</li>
@@ -198,6 +198,7 @@
     <li><strong>SVG layout vs CSS</strong></li>
     <li>Firefox: continuity</li>
     <li>Blink/WebKit: consistency(-ish)</li>
+    <li>Microsoft: Nothing (yet)</li>
     <li>Solution: transform-box!</li>
     <li><strong>view-box vs fill-box: setup</strong></li>
     <li><strong>view-box vs fill-box: figure</strong></li>
@@ -230,6 +231,14 @@
     <li>Not enough time!</li>
   </ul>
   <h2 id="about-me">About me</h2>
+
+  <script>
+    // Set scrollTop as soon as the body is parsed. This help with flicker when
+    // the onload event is delayed until images are loaded.
+    document.body.scrollTop = 0;
+
+  </script>
+
 </body>
 
 </html>
