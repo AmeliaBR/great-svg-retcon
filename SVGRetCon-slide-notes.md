@@ -1,3 +1,5 @@
+# The Great SVG RetCon
+
 - **Cover Slide**
 - **Title Page**
 - Introduce myself
@@ -14,6 +16,8 @@
 ## RetCon-ing the Web
 - Continuity even more important
 - You can't reboot the web
+- Different from other programming environments
+- Different from JS frameworks & libraries
 - **It's been tried (XML)**
 - **or like this (XML part 2)**
 - Standards makers have learned
@@ -75,9 +79,9 @@
 - CSS support was not required
 - But CSS keeps getting bigger
 - 3 problems:
-- Too many attributes
-- New features don't map to attributes
-- No fallback in attributes
+  - Too many attributes
+  - New features don't map to attributes
+  - No fallback in attributes
 - So:
 - **SVG styles are defined ...** (_read!_)
 - CSS required _for software_
@@ -88,7 +92,88 @@
 - Img must be same file
 - Object / Inline can be external
 - 2 dangers:
-- Style clash for inline
-- Lost URL refs
+  - Style clash for inline
+  - Lost URL refs
+- But what does it mean to style an SVG?
 
 ## Geometry
+- style vs content
+- **Geometric structure...**
+- Works for drawings
+- **Cat vs Rabbit vs Crazy Cat**
+- But not all SVGs are drawings
+- geometry as stylistic choice
+- repeated geometry for classes
+- Presentation attributes = RetCon opportunity!
+- New separation of style and structure
+- **Document structure...**
+- Document structure defined
+- Benefits:
+  - reduce duplication
+  - media queries
+  - pseudoclasses
+  - CSS animations & transitions
+- **But… attributes ≠ styles**
+  - attribute always has element
+  - style (should be) universal
+- **rx & ry, rect vs ellipse**
+- **rx & ry, defaults differ**
+- Choice to break continuity; only breaking an error state
+- Other cases not so easy, e.g. text
+- The RetCon is incomplete
+- **Geometry Properties Table**
+- shapes vs graphical effects
+- Polygon, polyline, line missing
+- Didn't want to lock in bad decisions
+- May need new CSS-friendly syntax,
+similar to transform
+
+## Transforms
+- Other half of core SVG geometry
+- Also originally attribute-only
+- **SVG coordinate system ... attribute**
+- **transform examples**
+- manipulate shape/drawing as a whole, without changing geometry attributes
+- CSS wanted it, too
+- CSS Transforms module
+- For SVG, same presentation attribute RetCon
+- But style also applies to other elements
+- Revised story:
+- **Coordinates can be...**
+- Wonderful.
+- Not wonderful.
+- Buggy transforms in SVG?
+- Broken continuity!
+- CSS Transforms spec designed for CSS layout needs.
+- **SVG layout vs CSS**
+- Firefox: continuity
+- Blink/WebKit: consistency(-ish)
+- Solution: transform-box!
+- **view-box vs fill-box: setup**
+- **view-box vs fill-box: figure**
+- default will be backwards compatible
+- change transform-box and transform-origin for same behavior as CSS
+- no transform-box options for non-SVG yet
+- Not in browsers. Coming soon(-ish).
+- Final story:
+- **Coordinates ... and transform-box ...**
+- For now: fallbacks!
+- Attribute works everywhere
+- But other differences
+- **Table of syntax comparisons**
+- Biggest difference: units
+- Other: new shorthands
+- These were good retcons!
+- Use legacy syntax for now.
+- Can use CSS transforms, with careful fallback:
+  - optional hover effects
+  - alternate media query layouts
+- **3D with 2D fallback**
+- Beware many 3D bugs!
+- **Fallback layout if no 3D**
+
+## So much more
+- Not enough time!
+
+## About me
+

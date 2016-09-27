@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Notes: The Great SVG RetCon</title>
+  <style>
+    body {
+      -moz-column-width: 20em;
+      column-width: 20em;
+      max-height: calc(100vh - 36px);
+      padding: 0.5em 0.2em;
+      box-sizing: border-box;
+      font-family: Open Sans, sans-serif;
+    }
+    
+    h1:first-child {
+      margin-top: auto;
+    }
+    
+    li {
+      padding-bottom: 0.1em;
+    }
+    
+    strong {
+      line-height: 1.5;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1 id="the-great-svg-retcon">The Great SVG RetCon</h1>
+  <ul>
+    <li><strong>Cover Slide</strong></li>
+    <li><strong>Title Page</strong></li>
+    <li>Introduce myself</li>
+    <li><strong>Cover Repeat</strong></li>
+    <li>Define terms: Great, SVG, Con</li>
+    <li>Broken continuity</li>
+    <li><strong>A magic suit</strong></li>
+    <li><strong>Retroactive</strong></li>
+    <li>Why?</li>
+    <li>Move the story forward</li>
+    <li><strong>A spinoff TV show</strong></li>
+    <li><strong>just one problem</strong></li>
+  </ul>
+  <h2 id="retcon-ing-the-web">RetCon-ing the Web</h2>
+  <ul>
+    <li>Continuity even more important</li>
+    <li>You can't reboot the web</li>
+    <li>Different from other programming environments</li>
+    <li>Different from JS frameworks &amp; libraries</li>
+    <li><strong>It's been tried (XML)</strong></li>
+    <li><strong>or like this (XML part 2)</strong></li>
+    <li>Standards makers have learned</li>
+    <li>Old websites still supported</li>
+    <li>New features allow fallbacks</li>
+    <li><strong>picture element builds on img</strong></li>
+    <li><strong>brings us to SVG 2</strong></li>
+    <li>Candidate Recommendation</li>
+    <li>Many new features</li>
+    <li>Also many dropped features</li>
+    <li>Today, focus on changes in concepts.</li>
+  </ul>
+  <h2 id="markup">Markup</h2>
+  <ul>
+    <li><strong>SVG is XML</strong></li>
+    <li>XML didn't take over the world</li>
+    <li>Retcon'd story:</li>
+    <li><strong>SVG is ... or XML</strong> (<em>read!</em>)</li>
+    <li>You probably already use it</li>
+    <li>SVG 2 changes just tidying up</li>
+    <li><strong>But .svg still XML</strong></li>
+    <li>Same markup, different file name, different parser</li>
+    <li>What if you need .svg?</li>
+    <li><strong>Use the parser, Luke</strong></li>
+    <li>Easy: MS Edge right-click</li>
+    <li>Otherwise: Dev Tools</li>
+    <li>What about reverse direction?</li>
+    <li>Continuity good, except:</li>
+    <li><strong>No weird prefixes</strong></li>
+    <li>SVG software will use correct prefixes, but:</li>
+    <li><strong>Avoid bloated files</strong></li>
+    <li>HTML parser ignores it, but why have it?</li>
+    <li><strong>Warning: namespaces &amp; scripting</strong></li>
+    <li>The proper way</li>
+    <li>Use the parser, Luke</li>
+    <li>(watch for innerHTML support)</li>
+  </ul>
+  <h2 id="links">Links</h2>
+  <ul>
+    <li>Next most basic part of the web</li>
+    <li>The old story:</li>
+    <li><strong>SVG uses XLink ...</strong> (<em>read!</em>)</li>
+    <li>XLink was a neat idea</li>
+    <li>But went nowhere</li>
+    <li>SVG only "simple" links</li>
+    <li>HTML had same, without XLink</li>
+    <li>So:</li>
+    <li><strong>SVG uses href ...</strong> (<em>read!</em>)</li>
+    <li>What does this mean to you?</li>
+    <li><strong>Not much, Sorry</strong></li>
+    <li>Continuity with old browsers</li>
+    <li>Fallback rules in spec don't help authors</li>
+    <li><strong>Except for test cases</strong></li>
+    <li>Browser test results</li>
+    <li>It will get better... (when you can drop support for old browsers)</li>
+  </ul>
+  <h2 id="styles">Styles</h2>
+  <ul>
+    <li>This is a CSS conference</li>
+    <li>But CSS was still new</li>
+    <li><strong>SVG styles ... or XML attr</strong> (<em>read!</em>)</li>
+    <li>CSS support was not required</li>
+    <li>But CSS keeps getting bigger</li>
+    <li>3 problems:
+      <ul>
+        <li>Too many attributes</li>
+        <li>New features don't map to attributes</li>
+        <li>No fallback in attributes</li>
+      </ul>
+    </li>
+    <li>So:</li>
+    <li><strong>SVG styles are defined ...</strong> (<em>read!</em>)</li>
+    <li>CSS required <em>for software</em></li>
+    <li>No new presentation attributes</li>
+    <li>CSS-in-SVG automatically upgrades</li>
+    <li>Use CSS fallback methods</li>
+    <li>But where?</li>
+    <li>Img must be same file</li>
+    <li>Object / Inline can be external</li>
+    <li>2 dangers:
+      <ul>
+        <li>Style clash for inline</li>
+        <li>Lost URL refs</li>
+      </ul>
+    </li>
+    <li>But what does it mean to style an SVG?</li>
+  </ul>
+  <h2 id="geometry">Geometry</h2>
+  <ul>
+    <li>style vs content</li>
+    <li><strong>Geometric structure...</strong></li>
+    <li>Works for drawings</li>
+    <li><strong>Cat vs Rabbit vs Crazy Cat</strong></li>
+    <li>But not all SVGs are drawings</li>
+    <li>geometry as stylistic choice</li>
+    <li>repeated geometry for classes</li>
+    <li>Presentation attributes = RetCon opportunity!</li>
+    <li>New separation of style and structure</li>
+    <li><strong>Document structure...</strong></li>
+    <li>Document structure defined</li>
+    <li>Benefits:
+      <ul>
+        <li>reduce duplication</li>
+        <li>media queries</li>
+        <li>pseudoclasses</li>
+        <li>CSS animations &amp; transitions</li>
+      </ul>
+    </li>
+    <li><strong>But… attributes ≠ styles</strong>
+      <ul>
+        <li>attribute always has element</li>
+        <li>style (should be) universal</li>
+      </ul>
+    </li>
+    <li><strong>rx &amp; ry, rect vs ellipse</strong></li>
+    <li><strong>rx &amp; ry, defaults differ</strong></li>
+    <li>Choice to break continuity; only breaking an error state</li>
+    <li>Other cases not so easy, e.g. text</li>
+    <li>The RetCon is incomplete</li>
+    <li><strong>Geometry Properties Table</strong></li>
+    <li>shapes vs graphical effects</li>
+    <li>Polygon, polyline, line missing</li>
+    <li>Didn't want to lock in bad decisions</li>
+    <li>May need new CSS-friendly syntax, similar to transform</li>
+  </ul>
+  <h2 id="transforms">Transforms</h2>
+  <ul>
+    <li>Other half of core SVG geometry</li>
+    <li>Also originally attribute-only</li>
+    <li><strong>SVG coordinate system ... attribute</strong></li>
+    <li><strong>transform examples</strong></li>
+    <li>manipulate shape/drawing as a whole, without changing geometry attributes</li>
+    <li>CSS wanted it, too</li>
+    <li>CSS Transforms module</li>
+    <li>For SVG, same presentation attribute RetCon</li>
+    <li>But style also applies to other elements</li>
+    <li>Revised story:</li>
+    <li><strong>Coordinates can be...</strong></li>
+    <li>Wonderful.</li>
+    <li>Not wonderful.</li>
+    <li>Buggy transforms in SVG?</li>
+    <li>Broken continuity!</li>
+    <li>CSS Transforms spec designed for CSS layout needs.</li>
+    <li><strong>SVG layout vs CSS</strong></li>
+    <li>Firefox: continuity</li>
+    <li>Blink/WebKit: consistency(-ish)</li>
+    <li>Solution: transform-box!</li>
+    <li><strong>view-box vs fill-box: setup</strong></li>
+    <li><strong>view-box vs fill-box: figure</strong></li>
+    <li>default will be backwards compatible</li>
+    <li>change transform-box and transform-origin for same behavior as CSS</li>
+    <li>no transform-box options for non-SVG yet</li>
+    <li>Not in browsers. Coming soon(-ish).</li>
+    <li>Final story:</li>
+    <li><strong>Coordinates ... and transform-box ...</strong></li>
+    <li>For now: fallbacks!</li>
+    <li>Attribute works everywhere</li>
+    <li>But other differences</li>
+    <li><strong>Table of syntax comparisons</strong></li>
+    <li>Biggest difference: units</li>
+    <li>Other: new shorthands</li>
+    <li>These were good retcons!</li>
+    <li>Use legacy syntax for now.</li>
+    <li>Can use CSS transforms, with careful fallback:
+      <ul>
+        <li>optional hover effects</li>
+        <li>alternate media query layouts</li>
+      </ul>
+    </li>
+    <li><strong>3D with 2D fallback</strong></li>
+    <li>Beware many 3D bugs!</li>
+    <li><strong>Fallback layout if no 3D</strong></li>
+  </ul>
+  <h2 id="so-much-more">So much more</h2>
+  <ul>
+    <li>Not enough time!</li>
+  </ul>
+  <h2 id="about-me">About me</h2>
+</body>
+
+</html>
