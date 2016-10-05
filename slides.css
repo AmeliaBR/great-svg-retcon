@@ -1,0 +1,304 @@
+/* core typography styles */
+body {
+  font-family: Open Sans, sans-serif;
+  line-height: 1.4;
+  scroll-snap-type: proximity;
+  scroll-snap-padding: 2vh 2vw;
+}
+h1, h2, h3, .h, .slide::before {
+  font-family: "Bauhaus 93", "Impact", "Arial Black", sans-serif;
+  line-height: 1.1;
+}
+h1, h2, .h {
+  text-align: center;
+  margin-top: 2em;
+}
+
+@media not print {
+  /* slide styles */
+  body {
+    background-color: #302;
+  }
+  h1, h2 {
+    text-shadow: royalBlue -2px -1px 0;
+    letter-spacing: 3px;
+    font-size: 300%;
+    margin: 0 5vh 0 2vh;
+  }
+  header p {
+    text-align: center;
+  }
+  .slide {
+    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+
+    position: relative;
+    scroll-snap-align: start;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 95%;
+    width: calc(100% - 1vw);
+    max-width: 50em;
+    height: 96vh;
+    padding: 1em;
+    border-radius: 1em;
+    margin: 2vh auto;
+
+    box-shadow: 0.2em 0.3em 0.5em 0 black;
+    background-color: tomato;
+    background-image: radial-gradient(circle farthest-side, transparent 60%, gold 125%);
+    color:  indigo;
+  }
+  .slide[data-section-slug]::before {
+    content: attr(data-section-slug);
+    display: block;
+    position: absolute;
+    background: lightBlue;
+    box-shadow: indigo 0 0 1em;
+    box-sizing: border-box;
+    padding: 3em 5em 1em;
+    width: 16em;
+    top: 0;
+    right: -8em;
+    text-align: center;
+    transform-origin: center top;
+    transform: rotate(45deg);
+    z-index: 100;
+  }
+  .slide[data-section-slug] {
+    padding-top: 4em;
+  }
+  .slide.text-only {
+    justify-content: center; /* don't add extra spaces between paragraphs */
+  }
+  .slide > * {
+    flex: none; /* default for text paragraphs & headers */
+    margin: 0.2em 0;
+  }
+  .slide > *:first-child {
+    margin-top: 0; /* margin will be set by padding on slide */
+  }
+  .slide > h2:only-child {
+    position: absolute; /* use up parent padding */
+    width: 100%;
+    padding: 10vh 1em;
+    box-sizing: border-box;
+    left: 0;
+    top: calc(50% - 10vh - 0.5em);
+    margin: 0;
+    background: lightBlue;
+  }
+  /* the story, revised */
+  .slide > strong {
+    display: block;
+    background: #ffec80;
+    font-size: 150%;
+    text-align: center;
+    padding: 1em;
+  }
+  ins, del {
+    color: darkRed;
+    font-weight: normal;
+  }
+  ins {
+    text-decoration: none;
+    background: none;
+    font-family: "Segoe Print", "Comic Sans", "Comic Sans MS", sans-serif;
+  }
+  ins code, del code {
+    color: inherit;
+    font-family: Segoe UI, monospace;
+  }
+  .editor2 {
+    color: mediumBlue;
+  }
+  @supports (text-decoration-color: red) {
+    del {color: inherit; text-decoration-color: darkRed;}
+    del.editor2 {color: inherit; text-decoration-color: mediumBlue;}
+  }
+  /* figures and demos */
+  .slide > figure{
+    height: 100%;
+    max-height: 96vh;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+  .slide > figure {
+    display: flex;    
+  }
+  figure > img, figure > object {
+    display: block;
+    object-fit: contain;
+    object-position: center center;
+    max-height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 0;
+  }
+  /* credit lines for images */
+  .slide small {
+    font-size: 75%;
+    display: block;
+    margin-left: auto;
+    text-align: right;
+    max-width: 70%;
+  }
+  table {
+    font-size: 80%;
+    line-height: 1.1;
+    background: lightBlue;
+    border-collapse: collapse;
+    margin: auto;
+  }
+  td, th {
+    border: solid royalBlue;
+    padding: 0.25em 0.5em;
+  }
+  th {
+    font-weight: bold;
+    background: indigo;
+    color: lightBlue;
+  }
+  li > p {
+    margin: 0.3em 0;
+  }  
+  pre {
+    background: indigo;
+    color: lightBlue;
+    padding: 0.5em;
+    margin: 0.2em;
+    white-space: pre-wrap;
+    overflow: auto;
+    flex: 1;
+  }
+  :not(a):focus {
+      outline: none;
+      border-right: solid #302;
+  }
+  :link { color: darkblue;}
+}
+@media (max-height: 30em), (max-width: 20em) {
+  .slide {
+    height: auto;
+    min-height: 10em;
+  }
+  .slide > figure {
+    min-height: 16em;
+  }
+}
+@media (min-width: 35em) {
+    html {
+        font-size: 150%;
+    }
+    li li {
+        font-size: 80%;
+    }
+    .slide {
+        padding: 1em 2em;
+        width: calc(100% - 2vw);
+    }
+}
+@media (min-width: 50em) AND (min-height: 40em) {
+    html {
+        font-size: 200%;
+    }
+    .slide {
+        padding: 1em 3em;
+    }
+}
+@supports (transition: opacity 1s) {
+  ins, del {
+    will-change: opacity;
+  }
+  ins {
+    transition-property: opacity;
+  }
+  del {
+    transition-property:  text-decoration, opacity;
+  }
+  .slide:focus + .slide > strong ins:not(.old-edits) {
+    opacity: 0;
+    transition-delay: 0s;
+    transition-duration: 0.1s;
+  }
+  .slide:focus > strong ins {
+    opacity: 1;
+    transition-duration: 0.5s;
+  }
+  .slide:focus > strong del {
+    opacity: 0;
+    transition-duration: 0s, 1s;
+  }
+  ins:nth-of-type(1) {
+    transition-delay: 0.3s;
+  }
+  ins:nth-of-type(2) {
+    transition-delay: 0.6s;
+  }
+  ins:nth-of-type(3) {
+    transition-delay: 0.9s;
+  }
+  ins:nth-of-type(4) {
+    transition-delay: 1.2s;
+  }
+  ins:nth-of-type(n + 5) {
+    transition-delay: 1.5s;
+  }
+  del:nth-of-type(1) {
+    transition-delay: 0.3s, 1.3s;
+  }
+  del:nth-of-type(2) {
+    transition-delay: 0.3s, 1.6s;
+  }
+  del:nth-of-type(3) {
+    transition-delay: 0.3s, 1.9s;
+  }
+  del:nth-of-type(4) {
+    transition-delay: 0.3s, 2.2s;
+  }
+  del:nth-of-type(n + 5) {
+    transition-delay: 0.3s, 2.5s;
+  }
+}
+@keyframes stagger-ins {
+  0%, 25% {position: static}
+  100% {position: static; opacity: 1}
+}
+@keyframes stagger-del {
+  0%, 25% {font-weight: normal;}
+  25% {text-decoration-line: line-through; text-decoration-color: transparent;}
+  100% {text-decoration-line: line-through; text-decoration-color: darkRed;}
+}
+
+@media print {
+    .slide {
+        break-inside: auto;
+    }
+    .slide:not(:last-child) {
+        border-bottom: solid lightGray;
+    }
+    a:link, a:visited {
+       color: inherit;
+       text-decoration: none;
+    }
+    a:link::after {
+        content: " (" attr(href) ")";
+    }
+    a.literal::after {
+        content: normal;
+    }
+    h2 br, h3 br {display: none;}
+    figure > img, figure > object, .slide > object, figure > svg {
+      max-height: 50vmin;
+      min-height: 10em;
+    }
+}
