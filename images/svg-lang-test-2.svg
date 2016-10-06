@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="100%" height="12em">
+  <style>
+svg {
+  background: lightSkyBlue;
+  font: bold x-large sans-serif;
+  height: 12em;
+  width: 100%;
+  min-width: 10em;
+}
+text {
+  text-anchor: middle;
+}
+tspan, tspan:lang(en-us) {
+  fill: darkRed;
+  text-decoration: line-through;
+}
+tspan:lang(en-ca) {
+  fill: darkGreen;
+  text-decoration: none;
+}
+  </style>
+  <text>
+    <tspan x="50%" dy="1.5em" xml:lang="en-ca">
+      Basic :lang() support, with prefix</tspan>
+    <tspan x="50%" dy="1.5em" lang="en-ca">
+      Support without prefix</tspan>
+    <a xml:lang="en-ca">
+      <tspan x="50%" dy="1.5em">
+        Inherited language, with prefix
+      </tspan>
+    </a>
+    <a lang="en-ca">
+      <tspan x="50%" dy="1.5em">
+        Inherited language, no prefix
+      </tspan>
+    </a>
+    <tspan x="50%" dy="1.5em" xml:lang="en-ca" lang="en-us">
+      xml:lang overrides lang</tspan>
+    <a xml:lang="en-us">
+      <tspan x="50%" dy="1.5em" lang="en-ca">
+        lang overrides inherited xml:lang
+      </tspan>
+    </a>
+    <tspan x="50%" dy="1.5em" xml:lang="en-us">
+      This one should be crossed-out!</tspan>
+  </text>
+</svg>
