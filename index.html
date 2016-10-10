@@ -133,6 +133,7 @@
 -->
     <div class="slide" data-section-slug="Markup">
       <p>Namespaces <em>always</em> matter when scripting!</p>
+      <p>(<code>xmlns</code> attribute <em>doesn't</em>, though)</p>
       <p>But, <code>innerHTML</code> triggers the parser.</p>
       <figure style="flex-direction: column">
         <pre class="lang-javascript has-code"><code class="js cm-s-default" data-lang="javascript">  <span class="cm-keyword">var</span> <span class="cm-def">ns</span> <span class="cm-operator">=</span> {<span class="cm-property">svg</span>: <span class="cm-string">"http://www.w3.org/2000/svg"</span>,<br>            <span class="cm-property">xlink</span>: <span class="cm-string">"http://www.w3.org/1999/xlink"</span>};<br>  <span class="cm-keyword">var</span> <span class="cm-def">u</span> <span class="cm-operator">=</span> <span class="cm-variable">createElementNS</span>(<span class="cm-variable">ns</span>.<span class="cm-property">svg</span>, <span class="cm-string">"use"</span>);<br>  <span class="cm-variable">u</span>.<span class="cm-property">setAttributeNS</span>(<span class="cm-variable">ns</span>.<span class="cm-property">xlink</span>, <span class="cm-string">"href"</span>, <span class="cm-string">"#icon"</span>);<br></code></pre>

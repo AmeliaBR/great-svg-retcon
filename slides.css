@@ -121,6 +121,13 @@ h1, h2, .h {
     del {color: inherit; text-decoration-color: darkRed;}
     del.editor2 {color: inherit; text-decoration-color: mediumBlue;}
   }
+  .slide > object:only-child {
+    height: auto;
+    overflow: hidden;
+    min-height: 0;
+    flex: 1;
+    margin: 0;
+  }
   /* figures and demos */
   .slide > figure{
     height: 100%;
