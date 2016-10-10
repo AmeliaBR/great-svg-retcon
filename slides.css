@@ -84,12 +84,12 @@ h1, h2, .h {
     margin-top: 0; /* margin will be set by padding on slide */
   }
   .slide > h2:only-child {
-    position: absolute; /* use up parent padding */
+    position: absolute; /* so that 100% includes parent padding */
     width: 100%;
     padding: 10vh 1em;
     box-sizing: border-box;
-    left: 0;
-    top: calc(50% - 10vh - 0.5em);
+    align-self: center;
+    left: 0; /* align flush to edge even if flex is not supported */
     margin: 0;
     background: lightBlue;
   }
